@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{templates/template}">
+  <head>
+    <title>Words</title>
+  </head>
+  <body>
+    <div layout:fragment="contentDiv">
+
+      <div class="d-flex mb-3">
+        <h4 class="mb-0">Words</h4>
+        <a href="#" th:href="@{/words/create}" class="btn btn-success btn-sm ms-auto">Create word</a>
+      </div>
+
+      <form th:action="@{/words}" method="get">
+        <div class="mb-3">
+          <label for="searchInput" class="form-label">Search</label>
+          <input type="text" class="form-control" id="searchInput" name="search" th:value="${search}" autofocus="autofocus"/>
+        </div>
+      </form>
+
+      <h5 th:if="${#lists.size(words) eq 0}" th:text="'No words found for \'' + ${search} + '\''">No words found</h5>
+
+      <div th:remove="tag" th:if="${#lists.size(words) ne 0}">
+        
+        <div class="mb-4" th:text="'Words: ' + ${#lists.size(words)}">44</div>
+
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <!--<th scope="col">ID</th>-->
+              <th scope="col">Word</th>
+              <th scope="col">Meaning</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="w : ${words}" >
+              <!--<th scope="row" th:text="${w.wordId}">1</th>-->
+              <td th:text="${w.word}">Word</td>
+              <td th:text="${w.meaning}">Meaning</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
